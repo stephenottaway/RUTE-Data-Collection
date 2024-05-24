@@ -14,19 +14,19 @@ def readData():
         if oneByte == b"\n":   # method should return bytes
             return buffer
         else:
-            buffer += oneByte.decode("unicode_escape")
+            buffer += oneByte.decode('unicode_escape')
 
 
 timestr = time.strftime("%d%b%Y_%H%M%p")
 
-folder_path = r'/home/ruteomic/RUTE/Weather-Data/Code'
-file_prefix = r'Log'
+folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
+file_prefix = 'Log'
 file_type = '.csv'
 file_name = file_prefix + '_' + timestr + file_type
 file_path = folder_path + '/' + file_name
 
 # Include the timestamps in the data
-include_timestamp_boolean = True
+include_timestamp_boolean = False 
 
 # Show the serial data in the Python console
 show_serial_data_boolean = True
@@ -45,26 +45,29 @@ ser = serial.Serial(
 print('Start time: ' + timestr)
 print("Connected to: " + ser.portstr)
 print('Now collecting data...')
+print()
 
 start_time = time.time()
 
 try: 
 
 
-    with open(file_path, 'w', newline='', encoding="unicode_escape") as csvfile:
+    with open(file_path, 'w', newline='') as csvfile:
 
         spamwriter = csv.writer(csvfile, delimiter=',')
 
         while True:
-            line = readData();
+            line = readData().strip()
             if show_serial_data_boolean:
-                print(line)
+                print("'" + line + "'")
             
 
             if include_timestamp_boolean != True:
-                to_write = [str(line)]
+                to_write = [line] 
             else:
-                to_write = [str(time.time()-start_time) + ',' + str(line)]
+                to_write = [str(time.time()-start_time) + ',' + str(line)] 
+         
+
 
             spamwriter.writerow(to_write)
 
@@ -72,10 +75,11 @@ try:
 
 except KeyboardInterrupt:
 
+    print()
     print('Cntl+C press detected - ending script.')
 
     print()
-    print('Log data svaed to:')
+    print('Log data saved to:')
     print(file_name)
 
     ser.close()

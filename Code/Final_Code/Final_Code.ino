@@ -21,7 +21,7 @@ HX711 scale;
 
 SoftwareSerial mySerial(MS_RX,MS_TX); 
 
-double weightInPounds = 0;
+double weight = 0;
 double wind_speed = 0;
 int analog_to_digital = 0;
 
@@ -52,21 +52,20 @@ void setup()
 
 void loop() 
 {
+  // csv output format will be time, wind direction (degrees, 0 is due north), wind speed (mph), weight (lbs), weight (lbs) / wind force (mph) 
+  weight = scale.get_units();
+  analog_to_digital = analogRead(SPEED_PIN); 
+  wind_speed = (32.2/348)*(analog_to_digital-85);
+  wind_speed *= 2.23694; // converting from m/s to mph
+  if (wind_speed == 0)
+  {
+    wind_speed += 0.01;
+  }
   uint8_t result;
   result = node.readHoldingRegisters(WD_DEGREE_REGISTER_ADDRESS, 1);  // only reading 1 register address
   if (result == node.ku8MBSuccess)
   {
-    Serial.print("Wind direction (0 is due north): "); 
-    Serial.print(node.getResponseBuffer(0x0)/10.0f); 
-    Serial.println(" degrees");
+    Serial.println(String(node.getResponseBuffer(0x0)/10.0f) + "," + String(weight) + "," + String(wind_speed) + "," + String((double) weight/wind_speed)); 
   }
   delay(DELAY_MSEC);
-  weightInPounds = scale.get_units();
-  analog_to_digital = analogRead(SPEED_PIN); 
-  wind_speed = (32.2/348)*(analog_to_digital-85);
-  wind_speed *= 2.23694; // converting from m/s to mph
-  Serial.println("Reading: " + String(weightInPounds) + " lbs\n");
-  delay(DELAY_MSEC);
-  Serial.println("analog output: " + String(analog_to_digital) + " wind speed: " + String(wind_speed) + " mph\n");
-  delay(DELAY_MSEC); 
 }
