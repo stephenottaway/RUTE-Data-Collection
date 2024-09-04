@@ -1,6 +1,6 @@
 clear; close all; clc;
 
-% fitting a (hopefully linear) function to the voltage vs analog data from the anemometer
+% calibrating wind anemometer by measuring voltages and observing arduino output
 
 voltages = [0.4 0.53 0.572 0.62 0.55 0.629 0.634 0.684 0.629 0.705 0.68 0.76 0.739 0.892 0.878 1.048 1.09 1.06];
 analog_output = [85 114 122 133 118 135 137 147 135 152 147 163 159 193 188 227 233 230];
