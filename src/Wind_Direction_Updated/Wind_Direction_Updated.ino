@@ -5,10 +5,10 @@
     Using the RS485 transceiver module, Rx/Tx is hooked up to the hardware
     serial port at 'Serial" to DI (driver input, connected to Tx) and RO 
     (receiver ouput, connected to Rx). 
-    DE and RE are shorted together and connected to pin 4
+    DE and RE are shorted together and connected to pin 8
 */
 // shorting DE and RE together 
-#define MAX485_DE_RE 4
+#define MAX485_DE_RE 8
 
 // instantiate the ModbusMaster object
 ModbusMaster node;
@@ -66,6 +66,3 @@ void loop()
 
 
 }
-
-
-
