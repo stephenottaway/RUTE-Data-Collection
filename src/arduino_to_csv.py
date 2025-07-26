@@ -26,9 +26,9 @@ folder_path = ''
 if (curr_device == 'Mac'):
     folder_path = '/Users/stephenottaway/RUTE/RUTE-Data-Collection/src/logs'
 elif (curr_device == 'Acer'):
-    folder_path = 'test'
+    folder_path = '/home/steph/RUTE/RUTE-Data-Collection/src/logs'
 else:
-    folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
+    folder_path = '/home/ruteomic/RUTE/RUTE-Data-Collection/src/logs'
 
 # folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
 file_prefix = 'Log'
