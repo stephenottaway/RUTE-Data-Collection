@@ -19,7 +19,18 @@ def readData():
 
 timestr = time.strftime("%d%b%Y_%H%M%p")
 
-folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
+devices = ['Mac', 'Acer', 'RUTE']
+curr_device = devices[0] # Modify this depending on which system I'm using
+
+folder_path = ''
+if (curr_device == 'Mac'):
+    folder_path = '/Users/stephenottaway/RUTE/RUTE-Data-Collection/src/logs'
+elif (curr_device == 'Acer'):
+    folder_path = 'test'
+else:
+    folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
+
+# folder_path = '/home/ruteomic/RUTE/Weather-Data/Code'
 file_prefix = 'Log'
 file_type = '.csv'
 file_name = file_prefix + '_' + timestr + file_type
