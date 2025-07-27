@@ -81,7 +81,7 @@ try:
                 to_write = [time.strftime("%H:%M:%S") + ',' + str(line)] 
          
             # Write the row to the writers csvfile object.
-            spamwriter.writerow(to_write)
+            spamwriter.writerow(to_write.strip('\"'))
 
 
 
