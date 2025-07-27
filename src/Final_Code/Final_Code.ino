@@ -1,3 +1,8 @@
+// NOTE: The SG has an EV of 5 V rather than 9 V as is expected from the datasheet, and the readings seem to be accurate +- 2 pounds roughly.
+// This was configured this way because of oversight regarding the Sparkfun Hx711 amplifier that expects a 5 V supply to the SG.  If redesigned,
+// either a different amplifier breakout board or different SG should be chosen.  In our use case, it is acceptable because the readings are on the order
+// of hundreds of pounds, meaning not having a super fine grain resolution won't make a substantial difference in our readings.
+
 #include <ModbusMaster.h>
 #include <SoftwareSerial.h>
 #include "HX711.h"
@@ -15,7 +20,7 @@
 #define WV_SLAVE_ADDRESS 2
 #define WV_DEGREE_REGISTER_ADDRESS 0x0000
 #define OFFSET_FACTOR 4294958576 
-#define SCALE_FACTOR -7*134.138458 // factor of -7 there to read correct weights, may need to be changed
+#define SCALE_FACTOR -7*134.138458 // working calibration factor, don't change!
 #define BAUD_RATE 9600
 #define DELAY_MSEC 5000
 
@@ -56,18 +61,18 @@ void setup()
 
 void loop() 
 {
-  // csv output format will be time, wind direction (degrees, 0 is due north), wind speed (mph), weight (lbs), weight (lbs) / wind speed (mph) 
+  // csv output format will be time, wind direction (degrees, 0 is due north), wind speed (mph), weight (lbs)
   weight = scale.get_units(10); // average 10 readings for weight output
   anm_adc_signal_voltage = analogRead(ANM_SIGNAL_PIN); 
   curr_wind_speed = (MAX_WIND_SPEED/(MAX_SPEED_ADC_READING-CAL_ZERO_SPEED_ADC_READING))*(anm_adc_signal_voltage-CAL_ZERO_SPEED_ADC_READING);
   curr_wind_speed *= MPH_CONVERSION_FACTOR; // converting from m/s to mph
   uint8_t wv_register_read_result;
-  wv_register_read_result = node.readHoldingRegisters(0x0000, 1);  // only reading 1 register address
+  wv_register_read_result = node.readHoldingRegisters(0x0000, 1); 
   if (wv_register_read_result == node.ku8MBSuccess)
   {
     Serial.println(String(node.getResponseBuffer(0x0)/10.0f) + "," + String(weight) + "," + String(curr_wind_speed)); 
   } else {
-    // If the RS485 communication failed, read a -1 where the wind vane reading would be.
+    // If the RS485 communication failed, write a -1 to where the wind vane reading would be.
     Serial.println("-1," + String(weight) + "," + String(curr_wind_speed));
   }
   // Will want to make this delay as long as possible, will ask Doug how often we want to be reading data.
