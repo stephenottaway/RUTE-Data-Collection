@@ -62,8 +62,6 @@ print("Connected to: " + ser.name) # ser.name returns the device name.
 print('Now collecting data...')
 print()
 
-start_time = time.time() # time.time() returns the time in seconds since the epoch as a floating-point number.
-
 try: 
 
     # Create and open the file_path in write mode, newline='' setting allows csv to handle newlines itself.
@@ -80,7 +78,7 @@ try:
             if include_timestamp == False:
                 to_write = [line] 
             else:
-                to_write = [str(time.time()-start_time) + ',' + str(line)] 
+                to_write = [time.strftime("%H:%M:%S") + ',' + str(line)] 
          
             # Write the row to the writers csvfile object.
             spamwriter.writerow(to_write)
