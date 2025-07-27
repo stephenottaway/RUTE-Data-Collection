@@ -17,7 +17,7 @@
 #define OFFSET_FACTOR 4294958576 
 #define SCALE_FACTOR -7*134.138458 // factor of -7 there to read correct weights, may need to be changed
 #define BAUD_RATE 9600
-#define DELAY_MSEC 3000
+#define DELAY_MSEC 5000
 
 
 ModbusMaster node;
@@ -61,18 +61,15 @@ void loop()
   anm_adc_signal_voltage = analogRead(ANM_SIGNAL_PIN); 
   curr_wind_speed = (MAX_WIND_SPEED/(MAX_SPEED_ADC_READING-CAL_ZERO_SPEED_ADC_READING))*(anm_adc_signal_voltage-CAL_ZERO_SPEED_ADC_READING);
   curr_wind_speed *= MPH_CONVERSION_FACTOR; // converting from m/s to mph
-  if (curr_wind_speed == 0)
-  {
-    // prevent division by zero if wind speed is very slow for last CSV line output
-    curr_wind_speed += 0.01;
-  }
   uint8_t wv_register_read_result;
   wv_register_read_result = node.readHoldingRegisters(0x0000, 1);  // only reading 1 register address
   if (wv_register_read_result == node.ku8MBSuccess)
   {
-    Serial.println(String(node.getResponseBuffer(0x0)/10.0f) + "," + String(weight) + "," + String(curr_wind_speed) + "," + String((double) weight/curr_wind_speed)); 
+    Serial.println(String(node.getResponseBuffer(0x0)/10.0f) + "," + String(weight) + "," + String(curr_wind_speed)); 
   } else {
-    Serial.println("-1," + String(weight) + "," + String(curr_wind_speed) + "," + String((double) weight/curr_wind_speed));
+    // If the RS485 communication failed, read a -1 where the wind vane reading would be.
+    Serial.println("-1," + String(weight) + "," + String(curr_wind_speed));
   }
+  // Will want to make this delay as long as possible, will ask Doug how often we want to be reading data.
   delay(DELAY_MSEC);
 }
