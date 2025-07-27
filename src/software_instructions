@@ -4,6 +4,7 @@ STARTING THE SCRIPT:
 2. Run "echo $0" to confirm we are in a bash shell.
 3. Navigate to RUTE-Data-Collection/src directory ("cd ~/home/ruteomic/RUTE/RUTE-Data-Collection/src").
 4. Type "ls -l *data_collection*". Ensure in both lines of the output there are three instances of "x" on the left-hand side. If not, run "chmod +x *data_collection*", and re-run previous command to verify it worked.
+5. Run apt install python3.10-venv to ensure we are able to set up a python virtual environment on linux.
 5. Create/activate the python virtual environment, update and install necessary packages, and run the data collection script by running "source start_venv_and_data_collection.sh". (Note: The "source" prefix is needed for the script to be executed in the current shell session INSTEAD of starting in a new subshell).
 6. Monitor the terminal output for a few seconds to ensure there are no errors, and (if none are seen) once you start seeing data readings you are done.
 

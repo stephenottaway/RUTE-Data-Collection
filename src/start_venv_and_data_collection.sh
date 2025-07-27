@@ -15,11 +15,11 @@ pip install --upgrade pip
 pip install pyserial
 
 echo "Installed versions:"
-python --version
+python3 --version
 pip show pyserial | grep -E 'Name|Version'
 
 echo "You are now in the virtual environment."
 echo "Running arduino_to_csv.py"
-python arduino_data_collection.py
+python3 arduino_data_collection.py
 
 
