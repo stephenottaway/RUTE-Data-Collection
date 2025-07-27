@@ -1,0 +1,14 @@
+STARTING THE SCRIPT:
+
+1. Open the terminal.
+2. Run "echo $0" to confirm we are in a bash shell.
+3. Navigate to RUTE-Data-Collection/src directory ("cd ~/home/ruteomic/RUTE/RUTE-Data-Collection/src").
+4. Type "ls -l *data_collection*". Ensure in both lines of the output there are three instances of "x" on the left-hand side. If not, run "chmod +x *data_collection*", and re-run previous command to verify it worked.
+5. Create/activate the python virtual environment, update and install necessary packages, and run the data collection script by running "source start_venv_and_data_collection.sh". (Note: The "source" prefix is needed for the script to be executed in the current shell session INSTEAD of starting in a new subshell).
+6. Monitor the terminal output for a few seconds to ensure there are no errors, and (if none are seen) once you start seeing data readings you are done.
+
+ENDING THE SCRIPT:
+1. In the same terminal window where you started the script (don't close it while the script is running), press control+C on your keyboard. The python script will end and print out the name of the file with the data.
+2. If not restarting script soon, type "deactivate" in the terminal to deactivate the virtual environment. Else, nothing to be done here.
+3. In the terminal, run "cd logs" and then run "ls" to see the newly created log file. From here, can scp the file or push to github to get data onto different computer.
+4. Type "cd .." to return to the srcs folder in preparation for rerunning the script starting from step 5 of the initial instructions. 
