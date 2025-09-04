@@ -26,7 +26,7 @@ def readData():
 timestr = time.strftime("%d%b%Y_%H%M%p")
 
 devices = ['Acer', 'RUTE']
-curr_device = devices[0] # Modify this depending on which system I'm using.
+curr_device = devices[1] # Modify this depending on which system I'm using.
 
 folder_path = ''
 if (curr_device == 'Acer'):

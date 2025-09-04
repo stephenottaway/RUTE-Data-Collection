@@ -19,7 +19,7 @@ python3 --version
 pip show pyserial | grep -E 'Name|Version'
 
 echo "You are now in the virtual environment."
-echo "Running arduino_to_csv.py"
+echo "Running arduino_data_collection.py"
 python3 arduino_data_collection.py
 
 
